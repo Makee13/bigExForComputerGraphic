@@ -3,10 +3,10 @@ This is big exercise for TLU's computer graphic subject
 
 # GIT
 
-## git checkout -b <branch-name>
+## git checkout -b [branch-name]
 Create new branch and switch in the branch
 
-## git checkout <branch-name>
+## git checkout [branch-name]
 Switch in the branch
 
 ## git branch
