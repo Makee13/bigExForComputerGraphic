@@ -1,0 +1,13 @@
+1. Di chuyển sang trái phải
+
+2. Quả bóng 3d tròn
+
+3. Tác động rồi vật bật phản xạ lại
+
+Cần phát triển
+
+1. Thanh trục di chuyển qua lại. (v)
+
+2. Quả bóng chạm vào thanh trục thì bật ngược lại
+
+3. Bóng chạy xuống đáy màn hình thì kết thúc trò chơi

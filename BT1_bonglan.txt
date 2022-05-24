@@ -1,0 +1,88 @@
+//=================================================================
+
+#include <windows.h>
+#include <GL/gl.h>
+#include <GL/glu.h>
+#include <GL/glut.h>
+static int day= 0;
+
+
+void display(void)
+{
+	glClear (GL_COLOR_BUFFER_BIT);
+
+//v? 1 m?t ph?ng nghiêng làm n?n cho chuy?n d?ng lan
+	glPushMatrix();
+	glColor3f(0.0,0.0,0.0);
+	glRotatef(45,0,0,1);	// bu?c2: xoay nó nghiêng 45 d? (ngu?c kim d?ng h?)
+	glScalef(15,0.6,5);		// bu?c3: kéo dãn hình l?p phuong ?y, t?o thành m?t ph?ng, có góc nghiêng 45
+	glutWireCube(1.0);		// bu?c1: t?o 1 hình kh?i l?p phuong 
+	glPopMatrix();
+//v? qu? bóng và s? chuy?n d?ng
+	glPushMatrix();
+	glColor3f(1.0,0.0,1.0);
+	glTranslatef(5,7,0);										// bu?c2: dua qu? bóng lên d?nh m?t ph?ng nghiêng
+	glTranslatef( (GLfloat) day/40 , (GLfloat) day/40 , 0);		// bu?c3: t?o chuy?n d?ng, phép t?nh ti?n tru?c
+	glRotatef (((GLfloat) day)*(-1), 0, 0, 1);					// -----  sau dó m?i th?c hi?n phép quay
+	glutWireSphere(1, 20, 15);									// bu?c1: t?o mô hình qu? bóng
+	glPopMatrix();
+
+	glutSwapBuffers();
+}
+
+
+
+void reshape (int w, int h)
+{
+	glViewport (0, 0, (GLsizei) w, (GLsizei) h); 
+	glMatrixMode (GL_PROJECTION);
+	glLoadIdentity ();
+	gluPerspective(60.0, (GLfloat) w/(GLfloat) h, 1.0, 20.0);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	gluLookAt (0, 0, 20, 0.0, 0.0, 0.0, 0, 1, 0);  // nhìn ngang t? tr?c Z.
+//	gluLookAt (0, 10, 10, 0.0, 0.0, 0.0, 0, 1, 0); // di?m nhìn khác: A(0,10,10), hu?ng d?u theo Oy, nhìn v? g?c t?a d?
+
+}
+
+
+void keyboard (unsigned char key, int x, int y)
+{
+	switch (key) {
+		case '.': // (>)
+			day = (day + 1)/1.1; // lan lên ch?m d?n
+			glutPostRedisplay();
+			break;
+		case ',': // (<)
+			day = (day - 1)*1.1; // lan xu?ng nhanh d?n
+			glutPostRedisplay();
+			break;
+
+		default:
+			break;
+	}
+}
+
+
+void init(void) 
+{
+	glClearColor (1.0, 1.0, 1.0, 1.0);
+	glShadeModel (GL_FLAT);
+}
+
+
+int main(int argc, char** argv)
+{
+	glutInit(&argc, argv);
+	glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB);
+	glutInitWindowSize (800, 800); 
+	glutInitWindowPosition (0, 0);
+	glutCreateWindow (argv[0]);
+	init ();
+	glutDisplayFunc(display); 
+	glutReshapeFunc(reshape);
+	glutKeyboardFunc(keyboard);
+	glutMainLoop();
+	return 0;
+}
+

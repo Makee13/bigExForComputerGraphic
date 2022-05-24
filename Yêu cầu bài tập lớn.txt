@@ -1,0 +1,14 @@
+Chào các em,
+Cô gửi nội dung bài tập lớn của nhóm như sau:
+======================================
+Thiết kế trò game đỡ bóng như sau: 
+- Thiết kế bóng 3D và một thanh M hình hộp chữ nhật mép dưới cửa sổ.  
+- Bóng chuyển động theo đường thẳng.
+- Khi chạm mép cửa sổ trái, phải, trên, bóng sẽ bật ngược lại theo nguyên lý phản xạ ánh sáng.
+- Khi bóng di chuyển xuống mép dưới cửa sổ, thanh M sẽ được người chơi di chuyển trái phải để đỡ bóng, nếu bóng chạm vào thanh thì sẽ bật ngược lại giống như chạm mép cửa sổ, nếu không, bóng sẽ rơi mất và kết thúc trò chơi.  
+======================================
+Tài liệu tham khảo:
+         + Chương 1, 2, 3, 5 ( Trong cuốn OpenGL Programming Guide, các chương này đã được dịch ra tiếng Việt và để trên web môn học)
+          + Bounce.c
+          + BT1_bonglan.txt
+Thời gian báo cáo sẽ vào buổi thực hành cuối cùng (04/06/2022).
