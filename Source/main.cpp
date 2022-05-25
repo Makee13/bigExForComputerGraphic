@@ -5,7 +5,7 @@
 
 static int day= 0;
 GLfloat t=1.0f;  
-GLfloat t1=1.0f,t2=1.0f,t3=0.0f;
+GLfloat t1=1.0f,t2=1.0f,t3=-2.5f;
 GLfloat windowWidth;
 GLfloat windowHeight;
 GLfloat xstep=0.1f; 
@@ -26,10 +26,8 @@ void display(void)
 	glPushMatrix();
 		glColor3f (1.0, 0.5, 0.0);
 		glTranslatef(t1,t2,t3); 
-		glutWireSphere(1.0,200.0,200.0); 
+		glutSolidSphere(1.0,200.0,200.0); 
 	glPopMatrix(); 
-	
-	
 	glutSwapBuffers();
 }
 // xu ly bong
@@ -37,16 +35,23 @@ void TimerFunctionForObject(int value)
     {   	
     	t1+=xstep;
 		t2+=ystep;
-		if(t1>=9 || t1<=-9)
+		if(t1>=10 || t1<=-10)
 			 xstep=-xstep;
-		if(t2>=5 || t2<=-4)
-			 ystep=-ystep;  
+		if(t2>=5 )
+			ystep=-ystep;  
+//			t2<=0+1
+		if(t2<=-5){
+			if(t1>= (GLfloat) day/5 && t1<= (GLfloat) day/5+5 )
+				ystep=-ystep; 
+		}
+			 
+			
 //		|| t2<=-5    
 		
-		t1+=xstep;
-		t2+=ystep;    
+//		t1+=xstep;
+//		t2+=ystep;    
     glutPostRedisplay();
-    glutTimerFunc(40,TimerFunctionForObject, 1);
+    glutTimerFunc(30,TimerFunctionForObject, 1);
 }
 
 
@@ -75,12 +80,12 @@ void reshape (int w, int h)
 }
 
 void limitLeft() {
-	if(day <= -10+day/5)
+	if(day <= -10)
 		day = -10;
 }
 
 void limitRight() {
-	if(day >= 10-day/5)
+	if(day >= 10)
 		day = 10;
 }
 
