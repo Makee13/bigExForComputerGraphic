@@ -37,16 +37,16 @@ void TimerFunctionForObject(int value)
     {   	
     	t1+=xstep;
 		t2+=ystep;
-		if(t1>=5 || t1<=-5)
+		if(t1>=9 || t1<=-9)
 			 xstep=-xstep;
-		if(t2>=5 || t2<=-5)
+		if(t2>=5 || t2<=-4)
 			 ystep=-ystep;  
 //		|| t2<=-5    
 		
 		t1+=xstep;
 		t2+=ystep;    
     glutPostRedisplay();
-    glutTimerFunc(30,TimerFunctionForObject, 1);
+    glutTimerFunc(40,TimerFunctionForObject, 1);
 }
 
 
