@@ -4,6 +4,10 @@
 #include <GL/glut.h>
 #include <iostream>
 #include <string.h> 
+#include <string>
+#include <cstdlib>
+#include <sstream>
+#include <ctime>
 
 using namespace std;
 
@@ -14,6 +18,8 @@ GLfloat windowWidth;
 GLfloat windowHeight;
 GLfloat xstep=0.1f; 
 GLfloat ystep=0.1f; 
+int check = 0;
+int score = 0;
 // thuoc tinh cho nguon sang chieu vao qua bong
 GLfloat light_ambientball[]={0.0,1.0,1.0,1.0};
 GLfloat light_diffuseball[]={0.0,1.0,1.0,1.0};
@@ -26,59 +32,136 @@ void welcomeDisplay();
 void endDisplay();
 //khai bao bien ham mytime
 
+void reset(){
+	t=1.0f;
+	t1=0.0f;t2=0.0f;t3=0.0f;
+	xstep=0.1f;
+	ystep=0.1f;
+	score = 0;
+	day = 0;
+}
+
+void welcomeDisplay() {
+	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glColor3f(1.0,0.0,0);
+	glRasterPos3f(0,1.5,0);
+	char msg[] ="GAME START!!!";
+	for(int i=0;i<strlen(msg);i++) {
+		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,msg[i]); 
+	}
+	
+	glRasterPos3f(0,0,0);
+	char msg1[] ="WELCOME BAll";
+	for(int i=0;i<strlen(msg1);i++) {
+		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,msg1[i]); 
+	}
+	glColor3f(1.0,0.0,1.0);
+	glRasterPos3f(0,-1.5,0);
+	char msg2[] ="PRESS: p to play.";
+	for(int i=0;i<strlen(msg2);i++) {
+		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,msg2[i]); 
+	}
+	char msg3[] ="PRESS: s to start.";
+	for(int i=0;i<strlen(msg3);i++) {
+		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,msg3[i]); 
+	}
+	char msg4[] ="PRESS: e to end.";
+	for(int i=0;i<strlen(msg4);i++) {
+		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,msg4[i]); 
+	}
+	
+	glutSwapBuffers();
+}
+
+void endDisplay() {
+	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glColor3f(1.0,0.0,0);
+	glRasterPos3f(-0.8,1.5,0);
+	char msg[] ="GAME OVER!!!";
+	for(int i=0;i<strlen(msg);i++) {
+		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,msg[i]); 
+	}
+	
+	string result;          
+	ostringstream convert;
+	convert << score;      
+	result = "Your score is " + convert.str() +" ^^";
+	
+	glColor3f(1.0,0.0,0);
+	glRasterPos3f(-0.8,-1.5,0);
+	for(int i=0;i<result.length();i++) {
+		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,result[i]); 
+	}
+	
+	glRasterPos3f(-0.8,-3,0);
+	char msg1[] ="GOODBYE BAll";
+	for(int i=0;i<strlen(msg1);i++) {
+		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,msg1[i]); 
+	}
+	glutSwapBuffers();
+}
 
 void display(void)
 {
-	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-  //Ve mat phang
-	glPushMatrix();
-		glColor3f(0.0,1.0,0.0);
-		glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambientThanh);
- 		glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuseThanh);
-		glScalef(5,1,5);
-		glTranslatef((GLfloat) day/5 , -5, 0);	
-		glutSolidCube(1.0);
-	glPopMatrix();
-//  ve qua bong
-	glPushMatrix();
-		glColor3f (1.0, 0.5, 0.0);
-		glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambientball);
- 		glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuseball);
-		glTranslatef(t1,t2,t3); 
-		glutSolidSphere(1.0,30.0,30.0); 
-	glPopMatrix(); 
-	
-	glutSwapBuffers();
+	if(check==1){
+		glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		
+	  //Ve mat phang
+		glPushMatrix();
+			glColor3f(0.0,1.0,0.0);
+			glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambientThanh);
+	 		glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuseThanh);
+			glScalef(5,1,5);
+			glTranslatef((GLfloat) day/5 , -5, 0);	
+			glutSolidCube(1.0);
+		glPopMatrix();
+	//  ve qua bong
+		glPushMatrix();
+			glColor3f (1.0, 0.5, 0.0);
+			glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambientball);
+	 		glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuseball);
+			glTranslatef(t1,t2,t3); 
+			glutSolidSphere(1.0,30.0,30.0);
+		glPopMatrix(); 
+		
+		glutSwapBuffers();
+	}else if(check==0){
+		welcomeDisplay();
+	}else if (check == 2){
+		endDisplay();
+	}
 }
 
 // xu ly bong
 void TimerFunctionForObject(int value)
     { 
-    	t1+=xstep;
-		t2+=ystep;
-		// bat dieu kien de bong di chuyen
-		if(t1>=10 || t1<=-10)
-			 xstep=-xstep;
-		if(t2>=5 )
-			ystep=-ystep;  
-		if(t2<=-3.5 ){
-			if(t1> (GLfloat) day-2.5 && t1< (GLfloat) day+2.5 ){// bat dieu kien de bong cham vao thanh truot se bat len
-				ystep=-ystep; 
-				t2=-3.5;
+    	if(check==1){
+	    	t1+=xstep;
+			t2+=ystep;
+			// bat dieu kien de bong di chuyen
+			if(t1>=10 || t1<=-10)
+				 xstep=-xstep;
+			if(t2>=5 )
+				ystep=-ystep;  
+			if(t2<=-3.5 ){
+				if(t1> (GLfloat) day-2.5 && t1< (GLfloat) day+2.5 ){// bat dieu kien de bong cham vao thanh truot se bat len
+					ystep=-ystep; 
+					t2=-3.5;
+					score += 1;
+				}
 			}
-		}
-		
-		// bat dieu kien cho game ket thuc
-		if( t2<-3.5){
-			glutDisplayFunc(endDisplay); 
-//			exit(0);
 			
-			
+			// bat dieu kien cho game ket thuc
+			if( t2<-3.5){
+				check = 2;
+				glutPostRedisplay();
+			}
+	    	glutPostRedisplay();
+	    	glutTimerFunc(30,TimerFunctionForObject, 1);
+	    }else if (check == 0 || check == 2){
+	    	glutPostRedisplay();
+	    	glutTimerFunc(1000, TimerFunctionForObject, 0);
 		}
-		  
-    glutPostRedisplay();
-    glutTimerFunc(30,TimerFunctionForObject, 1);
 }
 
 
@@ -134,33 +217,57 @@ void keyboard (int key, int x, int y)
 			moveRight();
 			glutPostRedisplay();
 			break;
+		case GLUT_KEY_HOME: // (HOME)
+			if(check==2){
+				check = 0;
+				reset();
+				glutPostRedisplay();
+			}
+			break;
 		default:
 			break;
 	}
-	if(key=='z') {
-		glutDisplayFunc(display);
-		glutPostRedisplay();
-	}
-//	if(key=='y') {
-//		glutDisplayFunc(welcomeDisplay);
-//	}
-//	glutPostRedisplay();
 }
 
-void myTime(int val){
-	 if(val==0) 
-	 {
-	 	glutDisplayFunc(display);
-	 	glutTimerFunc(50,TimerFunctionForObject, 1);
-	 }
-	else if (val==1)
-	{
-		glutDisplayFunc(welcomeDisplay); 
-		glutTimerFunc(50, myTime, 1);
-	 } 
-	glutPostRedisplay();
-	
-} 
+void keyboardchar (unsigned char key, int x, int y)
+{
+	switch (key) {
+		case 's':
+			check = 0;
+			reset();
+			glutPostRedisplay();
+			break;
+		case 'p':
+			if(check==0){
+				check = 1;
+				glutPostRedisplay();
+			}
+			break;
+		case 'e':
+			if(check==0 || check==1){
+				check = 2;
+				glutPostRedisplay();
+			}
+			break;
+		default:
+			break;
+	}
+
+
+//	if(key == GLUT_KEY_HOME){
+//		check = 0;
+//			reset();
+//			glutPostRedisplay();
+//	}
+//	if(key== GLUT_KEY_END){
+//		if(check==0){
+//				check = 1;
+//				glutPostRedisplay();
+//		}
+//	}
+}
+
+ 
 
 void init(void) 
 {
@@ -180,53 +287,21 @@ void init(void)
 	glShadeModel (GL_FLAT);
 }
 
-void welcomeDisplay() {
-	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glColor3f(1.0,0.0,0);
-	glRasterPos3f(-0.8,1.5,0);
-	char msg[] ="GAME START!!!";
-	for(int i=0;i<strlen(msg);i++) {
-		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,msg[i]); 
-	}
-	
-	glRasterPos3f(-0.8,-1.5,0);
-	char msg1[] ="WELCOME BAll";
-	for(int i=0;i<strlen(msg1);i++) {
-		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,msg1[i]); 
-	}
-	glutSwapBuffers();
-}
-
-void endDisplay() {
-	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glColor3f(1.0,0.0,0);
-	glRasterPos3f(-0.8,1.5,0);
-	char msg[] ="GAME OVER!!!";
-	for(int i=0;i<strlen(msg);i++) {
-		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,msg[i]); 
-	}
-	
-	glRasterPos3f(-0.8,-1.5,0);
-	char msg1[] ="GOODBYE BAll";
-	for(int i=0;i<strlen(msg1);i++) {
-		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,msg1[i]); 
-	}
-	glutSwapBuffers();
-}
 
 int main(int argc, char** argv)
 {
 	glutInit(&argc, argv);
 	glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB);
-	glutInitWindowSize (1000, 1000);
+	glutInitWindowSize (500, 500);
 	 
 	glutInitWindowPosition (100, 100);
 	glutCreateWindow("Game");
 	init ();
-	glutDisplayFunc(welcomeDisplay); 
+	glutDisplayFunc(display); 
 	glutReshapeFunc(reshape);
+	glutKeyboardFunc(keyboardchar);
 	glutSpecialFunc(keyboard);
-	glutTimerFunc(500, myTime, 0);
+	glutTimerFunc(500, TimerFunctionForObject, 0);
 	glutMainLoop();
 	return 0;
 }
