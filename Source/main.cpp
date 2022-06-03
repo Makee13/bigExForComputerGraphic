@@ -44,29 +44,29 @@ void reset(){
 void welcomeDisplay() {
 	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glColor3f(1.0,0.0,0);
-	glRasterPos3f(0,3,0);
+	glRasterPos3f(-3,3,0);
 	char msg[] ="GAME START!!!";
 	for(int i=0;i<strlen(msg);i++) {
 		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,msg[i]); 
 	}
 	
-	glRasterPos3f(0,2,0);
+	glRasterPos3f(-3,2,0);
 	char msg1[] ="WELCOME BAll";
 	for(int i=0;i<strlen(msg1);i++) {
 		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,msg1[i]); 
 	}
 	glColor3f(1.0,0.0,1.0);
-	glRasterPos3f(0,0,0);
+	glRasterPos3f(-3,0,0);
 	char msg2[] ="Press: p to play.";
 	for(int i=0;i<strlen(msg2);i++) {
 		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,msg2[i]); 
 	}
-	glRasterPos3f(0,-1,0);
+	glRasterPos3f(-3,-1,0);
 	char msg3[] ="Press: key Home to start.";
 	for(int i=0;i<strlen(msg3);i++) {
 		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,msg3[i]); 
 	}
-	glRasterPos3f(0,-2.0,0);
+	glRasterPos3f(-3,-2.0,0);
 	char msg4[] ="Press: e to end.";
 	for(int i=0;i<strlen(msg4);i++) {
 		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,msg4[i]); 
@@ -91,31 +91,31 @@ void endDisplay() {
 	ostringstream convert;
 	convert << score;      
 	result = "Your score is " + convert.str() +" ^^";
-	glRasterPos3f(0,3,0);
+	glRasterPos3f(-3,3,0);
 	char msg[] ="GAME OVER!!!";
 	for(int i=0;i<strlen(msg);i++) {
 		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,msg[i]); 
 	}
 	
 	glColor3f(1.0,0.0,0);
-	glRasterPos3f(0,2,0);
+	glRasterPos3f(-3,2,0);
 	for(int i=0;i<result.length();i++) {
 		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,result[i]); 
 	}
 	
-	glRasterPos3f(0,1,0);
+	glRasterPos3f(-3,1,0);
 	char msg1[] ="GOODBYE BAll";
 	for(int i=0;i<strlen(msg1);i++) {
 		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,msg1[i]); 
 	}
-	glRasterPos3f(0,-1,0);
+	glRasterPos3f(-3,-1,0);
 	
 	
 	char msg3[] ="Press: key Home to start.";
 	for(int i=0;i<strlen(msg3);i++) {
 		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,msg3[i]); 
 	}
-	glRasterPos3f(0,-2,0);
+	glRasterPos3f(-3,-2,0);
 	
 	char msg4[] ="Press: e to end.";
 	for(int i=0;i<strlen(msg4);i++) {
