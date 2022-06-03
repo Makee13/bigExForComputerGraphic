@@ -72,16 +72,6 @@ void welcomeDisplay() {
 		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,msg4[i]); 
 	}
 	
-	//test 
-	string msg5 =to_string(windowWidth);
-	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,msg5[0]); 
-	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,msg5[1]); 
-	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,msg5[2]); 
-	
-	string msg6 =to_string(windowHeight);
-	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,msg6[0]); 
-	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,msg6[1]); 
-	glutSwapBuffers();
 }
 
 void endDisplay() {
